@@ -17,7 +17,7 @@ public class AmongSandItem {
     public static DeferredRegister<CreativeModeTab> C_TAB =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, AmongSand.MODID);
 
-    public static final RegistryObject<Item> QUICKSAND = SAND_ITEM.register("amongsand",
+    public static final RegistryObject<Item> QUICKSAND = SAND_ITEM.register("amongsand_block",
             () -> new Item(new Item.Properties()));
 
     public static RegistryObject<CreativeModeTab> QUICKSAND_CREATIVE =

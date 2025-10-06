@@ -17,7 +17,7 @@ import java.util.function.Supplier;
 public class AmongSandBlock {
     public static final DeferredRegister<Block> SAND_BLOCK = DeferredRegister.create(ForgeRegistries.BLOCKS, AmongSand.MODID);
 
-    public static final RegistryObject<Block> QUICKSAND = registerBlock("amongsand",
+    public static final RegistryObject<Block> QUICKSAND = registerBlock("amongsand_block",
             () -> new Block(BlockBehaviour.Properties.of()
                   .strength(0.5f).requiresCorrectToolForDrops().sound(SoundType.SAND)));
 
