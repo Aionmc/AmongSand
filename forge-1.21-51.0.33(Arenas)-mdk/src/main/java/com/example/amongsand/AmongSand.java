@@ -1,6 +1,6 @@
 package com.example.amongsand;
 
-import com.example.amongsand.item.AmongSandItem;
+import com.example.amongsand.block.AmongSandBlock;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
@@ -45,7 +45,7 @@ public class AmongSand
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
-        AmongSandItem.SAND_ITEM.register(modEventBus);
+        AmongSandBlock.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
