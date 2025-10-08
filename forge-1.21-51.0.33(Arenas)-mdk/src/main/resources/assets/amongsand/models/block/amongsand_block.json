@@ -1,6 +1,8 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "block/cube_bottom_top",
   "textures": {
-    "all": "amongsand:block/amongsand_block"
+    "top": "amongsand:block/textura_arena",
+    "bottom": "amongsand:block/textura_arena",
+    "side": "amongsand:block/amongsand_block"
   }
 }
