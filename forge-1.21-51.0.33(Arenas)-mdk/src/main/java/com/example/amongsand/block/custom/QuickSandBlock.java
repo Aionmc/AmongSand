@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 package com.example.amongsand.block.custom;
 
@@ -14,14 +15,35 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
+=======
+package com.example.amongsand.block.custom;
+
+import com.mojang.serialization.MapCodec;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.FallingBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+>>>>>>> 31acdd31893487362af86428e153fc1512951f6b
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.List;
 
 public class QuickSandBlock extends Block {
+=======
+public class QuickSandBlock extends FallingBlock {
+
+    //para serializar el bloque, necesario para subclases de bloques desde la version 1.20
+    public static final MapCodec<QuickSandBlock> CODEC = MapCodec.unit(QuickSandBlock::new);
+>>>>>>> 31acdd31893487362af86428e153fc1512951f6b
 
     private static final VoxelShape MIN_COLLISION = Shapes.empty(); // la colisión del bloque, es vacia por lo que permite entrar en el
     private static final double HORIZONTAL_FACTOR = 0.75; // reduce la velocidad al moverse dentro del bloque, es la fricción
@@ -30,17 +52,26 @@ public class QuickSandBlock extends Block {
 
     public QuickSandBlock() {
         super(BlockBehaviour.Properties.of()
+<<<<<<< HEAD
                 .strength(0.2f)
+=======
+                .strength(0.5f)
+>>>>>>> 31acdd31893487362af86428e153fc1512951f6b
                 .sound(SoundType.SAND)
                 .noOcclusion()
         );
     }
 
     @Override
+<<<<<<< HEAD
     public java.util.List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         List<ItemStack> drops = new ArrayList<>();
         drops.add(new ItemStack(this.asItem()));
         return drops;
+=======
+    public MapCodec<QuickSandBlock> codec() {
+        return CODEC;
+>>>>>>> 31acdd31893487362af86428e153fc1512951f6b
     }
 
     @Override
@@ -52,7 +83,11 @@ public class QuickSandBlock extends Block {
     @Override
     //cada tick que la entidad está dentro del bloque
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+<<<<<<< HEAD
         if (entity instanceof LivingEntity living) {
+=======
+        if (entity instanceof LivingEntity living && !living.isShiftKeyDown()) {
+>>>>>>> 31acdd31893487362af86428e153fc1512951f6b
 
             double vx = entity.getDeltaMovement().x * HORIZONTAL_FACTOR;
             double vz = entity.getDeltaMovement().z * HORIZONTAL_FACTOR;
@@ -64,6 +99,7 @@ public class QuickSandBlock extends Block {
             entity.setDeltaMovement(vx, vy, vz); // aplica fricción horizontal y hundimiento vertical
             entity.setOnGround(false); // considera que la entidad está en el aire, es decir no sobre un bloque
 
+<<<<<<< HEAD
             if (!level.isClientSide) {
                 // Altura de la cabeza del jugador
                 double head = entity.getY() + entity.getEyeHeight();
@@ -88,6 +124,10 @@ public class QuickSandBlock extends Block {
                  item.discard();
              }*/
         }
+=======
+            super.entityInside(state, level, pos, entity);
+        }
+>>>>>>> 31acdd31893487362af86428e153fc1512951f6b
     }
 
     @Override
