@@ -5,9 +5,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
@@ -15,6 +17,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -42,7 +45,6 @@ public class QuickSandBlock extends Block {
     private static final double TARGET_DESCENT = -0.002; // es el hundimiento lento cuando el jugador entra en el bloque
     private static final double MAX_DESCENT = -0.004; // es el límite de velocidad máxima de hundimiento.
 
-    private static boolean damage = true;
     private static final AtomicBoolean teleporting = new AtomicBoolean(false);
     private static boolean loading = false;
     //aqui iria la posibilidad de daño o lo que sea...  --> if num random <0.3 templo (damage = false)
@@ -93,7 +95,43 @@ public class QuickSandBlock extends Block {
                 // Si la cabeza está bajo la superficie hace daño
                 if (head < blockHeight - 0.3) {
                     if (entity instanceof Player player) {
-                        if (!teleporting.get()) {
+                        //Water drop
+                        ServerLevel serverLevel = (ServerLevel) level;
+                        ServerPlayer serverPlayer = (ServerPlayer) player;
+
+                        long now = level.getGameTime();
+                        long last = serverPlayer.getPersistentData().getLong("LastTeleport");
+                        if (now - last < 20) {
+                            return;
+                        }
+                        serverPlayer.getPersistentData().putLong("LastTeleport", now);
+
+                        serverLevel.getServer().execute(() -> {
+                            try {
+                                serverPlayer.teleportTo(player.getX() + 20, player.getY() + 200, player.getZ());
+
+                                ItemStack waterBucket = new ItemStack(Items.WATER_BUCKET);
+                                boolean bucketAdded = player.getInventory().add(waterBucket);
+                                if (!bucketAdded) {
+                                   //If the inventory is full, the bucket appears below the player
+                                    ItemEntity airWaterBucket = new ItemEntity(serverLevel,
+                                            player.getX(),
+                                            player.getY() - 40,
+                                            player.getZ(),
+                                            waterBucket);
+
+                                    serverLevel.addFreshEntity(airWaterBucket);
+
+                                    player.displayClientMessage(Component.literal("¡Water drop!, ¡tienes el inventario lleno, hay un cubo de agua cayendo!"), true);
+                                }else {
+                                    player.displayClientMessage(Component.literal("¡Water drop a la vista!"), true);
+                                }
+                            } catch (Exception e) {
+                                serverPlayer.teleportTo(player.getX() + 20, player.getY() + 200, player.getZ());
+                            }
+                        });
+                        //TEMPLE
+                        /*if (!teleporting.get()) {
                             teleporting.set(true);
                             ServerLevel serverLevel = (ServerLevel) level;
                             BlockPos templeOrigin = BlockPos.containing(entity.position());
@@ -206,7 +244,7 @@ public class QuickSandBlock extends Block {
                             }
                         } else {
                             living.hurt(level.damageSources().drown(), 2.0F);
-                        }
+                        }*/
                     } else {
                         // Aplica 1 punto de daño cada tick
                         living.hurt(level.damageSources().drown(), 2.0F);
