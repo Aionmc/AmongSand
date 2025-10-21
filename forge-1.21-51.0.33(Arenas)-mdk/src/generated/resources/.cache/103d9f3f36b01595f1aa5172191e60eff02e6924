@@ -1,0 +1,4 @@
+// 1.21	2025-10-21T10:28:34.9870761	Registries
+61e90b2c7f636416d0d9e5a84c258205ab4157c5 data/amongsand/forge/biome_modifier/add_quicksand_to_desert.json
+c86f6ab4c3bcd8ff8156ad6337030cfc05fa5d6b data/amongsand/worldgen/configured_feature/quicksand_disk.json
+d1a8b96db37c2b7ffcad07cba69b5a91725f5862 data/amongsand/worldgen/placed_feature/quicksand_disk_placed.json
