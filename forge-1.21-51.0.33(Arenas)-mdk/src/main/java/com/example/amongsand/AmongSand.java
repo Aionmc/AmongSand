@@ -36,6 +36,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
+import com.example.amongsand.worldgen.ModFeatures;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(AmongSand.MODID)
@@ -59,6 +60,9 @@ public class AmongSand
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
+
+        //Registra las features personalizadas del mod
+        ModFeatures.FEATURES.register(modEventBus);
 
         // Register our mod's ForgeConfigSpec so that Forge can create and load the config file for us
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);

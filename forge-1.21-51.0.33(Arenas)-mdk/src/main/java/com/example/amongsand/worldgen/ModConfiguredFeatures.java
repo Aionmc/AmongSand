@@ -25,7 +25,7 @@ public class ModConfiguredFeatures {
         context.register(
                 QUICKSAND_DISK_KEY,
                 new ConfiguredFeature<>(
-                        Feature.DISK,
+                        ModFeatures.QUICKSAND_FEATURE.get(),
                         new DiskConfiguration(
                                 RuleBasedBlockStateProvider.simple(AmongSandBlock.QUICKSAND.get()),
                                 BlockPredicate.matchesBlocks(Blocks.SAND, Blocks.SANDSTONE),
