@@ -207,7 +207,7 @@ public class QuickSandBlock extends Block {
                                                 }
                                                 //sleep
                                                 try {
-                                                    Thread.sleep(2000);
+                                                    Thread.sleep(100);
                                                 } catch (InterruptedException e) {
                                                     throw new RuntimeException(e);
                                                 }
@@ -275,17 +275,12 @@ public class QuickSandBlock extends Block {
                 living.hurt(level.damageSources().drown(), 2.0F);
             }
             super.entityInside(state, level, pos, entity);
-            if (entity instanceof ItemEntity item) {
-                //The item dissappears
-                item.discard();
-
-                //The object drowns and later disappears
-             /*item.setDeltaMovement(item.getDeltaMovement().multiply(HORIZONTAL_FACTOR, HORIZONTAL_FACTOR, HORIZONTAL_FACTOR));
-             if (level.getGameTime() % 5 == 0){
-                 item.discard();
-             }*/
-            }
         }//End if livingEntity
+
+        if (entity instanceof ItemEntity item) {
+            //The item dissappears
+            item.discard();
+        }
     }
 
     @Override
