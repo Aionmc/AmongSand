@@ -118,7 +118,7 @@ public class QuickSandBlock extends Block {
 
                         switch (action) {
                             case DAMAGE -> {
-                                living.hurt(level.damageSources().drown(), 2.0F);
+                                living.hurt(level.damageSources().inWall(), 2.0F);
                                 player.displayClientMessage(Component.literal("¡Te hundes en la arena movediza!"), true);
                             } //End damage
 
@@ -247,32 +247,34 @@ public class QuickSandBlock extends Block {
                                                             null,                            // null → todos los jugadores cercanos lo oyen
                                                             player.blockPosition(),         // posición del jugador
                                                             SoundEvents.ENDERMAN_TELEPORT,  // sonido de la Ender Pearl
-                                                            SoundSource.BLOCKS,             // categoría de sonido (jugador)
+                                                            SoundSource.BLOCKS,             // categoría de sonido (bloque)
                                                             1.0f,                           // volumen
-                                                            1.0f                            // tono (1.0 = normal)
+                                                            1.0f                            // tono
                                                     );
                                                 }
                                             }).start();
 
                                         } else {
-                                            living.hurt(level.damageSources().drown(), 2.0F);
+                                            living.hurt(level.damageSources().inWall(), 2.0F);
                                         }
 
                                     } catch (Exception e) {
-                                        living.hurt(level.damageSources().drown(), 2.0F);
+                                        living.hurt(level.damageSources().inWall(), 2.0F);
                                     } finally {
                                         teleporting.set(false);
                                     }
                                 } else {
-                                    living.hurt(level.damageSources().drown(), 2.0F);
+                                    living.hurt(level.damageSources().inWall(), 2.0F);
                                 }
                             }//End Temple
                         }//End Switch
+                    }else{
+                        living.hurt(level.damageSources().inWall(), 2.0F);
                     }//End if instanceof
                 }//End if head
             }//End if isCLientSide
             else {
-                living.hurt(level.damageSources().drown(), 2.0F);
+                living.hurt(level.damageSources().inWall(), 2.0F);
             }
             super.entityInside(state, level, pos, entity);
         }//End if livingEntity

@@ -3,6 +3,7 @@ package com.example.amongsand.block;
 import com.example.amongsand.AmongSand;
 import com.example.amongsand.block.custom.QuickSandBlock;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -34,6 +35,7 @@ public class AmongSandBlock {
                     () -> CreativeModeTab.builder()
                             .withTabsBefore(CreativeModeTabs.INGREDIENTS)
                             .icon(() -> QUICKSAND_ITEM.get().getDefaultInstance())
+                            .title(Component.literal("Among Sand"))
                             .displayItems((parameters, output) -> {
                                 output.accept(QUICKSAND.get());
                             }).build());
